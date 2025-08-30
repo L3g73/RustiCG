@@ -1,7 +1,14 @@
 [package]
 name = "rusticg"
+description = "Reverses possible internal seeds of an LCG using a system of inequalities on the output of random calls"
 version = "1.0.0"
 edition = "2024"
+readme = "README.md"
+license = "Apache-2.0"
+repository = "https://github.com/L3g73/RustiCG"
+
+keywords = ["lcg", "latticg", "random"]
+categories = ["mathematics"]
 
 [profile.release]
 opt-level = 3
