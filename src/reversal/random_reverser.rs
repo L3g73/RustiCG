@@ -3,7 +3,6 @@ use crate::math::component::big_vector::{OwnedBigVector, Vector};
 use crate::math::lattice::decomposition::inverse;
 use crate::math::lattice::enumerate::enumerate;
 use crate::math::lattice::lll;
-use crate::reversal::java;
 use crate::util::util::LCM;
 use crate::util::util::{filled_vec, ToU64};
 use crate::util::{ParallelIterator, Random, JAVA, LCG};
