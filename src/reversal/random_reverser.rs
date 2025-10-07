@@ -8,6 +8,7 @@ use crate::util::util::{filled_vec, ToU64};
 use crate::util::{ParallelIterator, Random, JAVA, LCG};
 use malachite::base::num::arithmetic::traits::Pow;
 use malachite::base::num::basic::traits::{One, Two, Zero};
+use malachite::base::num::conversion::traits::ToSci;
 use malachite::rational::Rational;
 use malachite::Integer;
 
@@ -72,6 +73,7 @@ pub struct RandomReverser {
     lattice: BigMatrix,
     current_call_index: i64,
     dimensions: usize,
+    success_chance: Rational
 }
 
 impl RandomReverser {
@@ -96,11 +98,16 @@ impl RandomReverser {
             lattice: BigMatrix::new(0, 0),
             current_call_index: 0,
             dimensions: 0,
+            success_chance: Rational::ONE
         }
     }
 
     /// Starts reversing seeds.
     pub fn into_all_valid_seeds(self) -> Box<dyn Iterator<Item = i64>> {
+        if self.success_chance != Rational::ONE {
+            eprintln!("Ignored ~{}% of all seeds", (Rational::ONE - &self.success_chance).to_sci());
+        }
+
         let dim = self.dimensions;
 
         let seeds: Box<dyn Iterator<Item = i64>> = if dim == 0 {
@@ -199,8 +206,8 @@ impl RandomReverser {
 
         // Copy old lattice
         if self.lattice.column_count != 0 {
-            for row in 0..self.dimensions {
-                for col in 0..self.dimensions - 1 {
+            for row in 0..self.dimensions + 1 - added_dimensions {
+                for col in 0..self.dimensions - added_dimensions {
                     new_lattice.set(row, col, self.lattice.get(row, col).clone())
                 }
             }
@@ -325,6 +332,8 @@ impl RandomReverser {
                 .set(dims, dims - 1, Rational::from(measured_mod));
             return;
         }
+
+        self.success_chance *= Rational::ONE - Rational::from_integers_ref(&residue, &self.modulus);
 
         self.add_bounds(vec![Integer::ZERO], vec![&self.modulus - residue]); // seeds not fitting in this range are currently unsupported
         self.current_call_index += 1;
