@@ -4,6 +4,8 @@
 Reverses possible internal seeds of an LCG using a system of inequalities on the output of random calls.<br>
 Currently only Java's java.util.Random class is implemented, but other LCGs can be added easily.
 
+Click [here](https://github.com/L3g73/RustiCG/blob/main/CHANGELOG.md) for a changelog.
+
 ### Example
 ```rust 
 use rusticg::reversal::dynamic_program::{DynamicProgram, Invertible, ReversalError};
