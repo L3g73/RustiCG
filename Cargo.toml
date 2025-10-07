@@ -1,7 +1,7 @@
 [package]
 name = "rusticg"
 description = "Reverses possible internal seeds of an LCG using a system of inequalities on the output of random calls"
-version = "1.0.0"
+version = "1.0.1"
 edition = "2024"
 readme = "README.md"
 license = "Apache-2.0"
