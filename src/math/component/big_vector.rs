@@ -207,7 +207,7 @@ impl OwnedBigVector {
         }
     }
 
-    pub fn as_view(&self) -> ViewBigVector {
+    pub fn as_view(&'_ self) -> ViewBigVector<'_> {
         ViewBigVector::new(self.dimension, &self.numbers, 0, 1)
     }
 

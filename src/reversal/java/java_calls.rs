@@ -304,7 +304,7 @@ impl<T: Copy + Debug + PartialOrd + From<u8> + Rem<T, Output = T> + 'static> AsF
     }
 
     /// Will throw an error if the range is empty.
-    fn as_filter_fn(&self) -> Result<Box<(dyn Fn(&mut Random) -> bool)>, ReversalError> {
+    fn as_filter_fn(&self) -> Result<Box<dyn Fn(&mut Random) -> bool>, ReversalError> {
         Ok(match &self.range {
             Full => {
                 let calls = self.processor.calls;

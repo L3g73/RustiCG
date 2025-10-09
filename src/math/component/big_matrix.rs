@@ -62,11 +62,11 @@ impl BigMatrix {
         self.numbers[col + self.column_count * row] = value;
     }
 
-    pub fn get_row(&self, row: usize) -> ViewBigVector {
+    pub fn get_row(&'_ self, row: usize) -> ViewBigVector<'_> {
         ViewBigVector::new(self.column_count, &self.numbers, row * self.column_count, 1)
     }
 
-    pub fn get_row_mut(&mut self, row: usize) -> MutViewBigVector {
+    pub fn get_row_mut(&'_ mut self, row: usize) -> MutViewBigVector<'_> {
         MutViewBigVector::new(
             self.column_count,
             &mut self.numbers,
@@ -75,11 +75,11 @@ impl BigMatrix {
         )
     }
 
-    pub fn get_column(&self, column: usize) -> ViewBigVector {
+    pub fn get_column(&'_ self, column: usize) -> ViewBigVector<'_> {
         ViewBigVector::new(self.row_count, &self.numbers, column, self.column_count)
     }
 
-    pub fn get_column_mut(&mut self, column: usize) -> MutViewBigVector {
+    pub fn get_column_mut(&'_ mut self, column: usize) -> MutViewBigVector<'_> {
         MutViewBigVector::new(self.row_count, &mut self.numbers, column, self.column_count)
     }
 
