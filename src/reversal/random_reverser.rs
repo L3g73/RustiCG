@@ -13,7 +13,7 @@ use malachite::rational::Rational;
 use malachite::Integer;
 
 /// Skips [LCG] calls and applies a filter function on the resulting seeds instead.<br>
-/// Is usually not interacted with directly, use [DynamicProgram] instead.
+/// Is usually not interacted with directly, use [DynamicProgram](crate::reversal::dynamic_program::DynamicProgram) instead.
 pub struct FilteredSkip {
     skip_lcg: LCG,
     filter: Box<dyn Fn(&mut Random) -> bool>,
@@ -42,7 +42,7 @@ struct Bounds {
 }
 
 /// Generates the lattice used and applies bounds / filters.<br>
-/// Is usually not interacted with directly, use [DynamicProgram] instead.<br>
+/// Is usually not interacted with directly, use [DynamicProgram](crate::reversal::dynamic_program::DynamicProgram) instead.<br>
 /// See [here](https://gist.github.com/EDDxample/38a9acddcd29f15af034fd91da93b8fa) for an explanation on how the lattice works.
 ///
 /// # Bounds vs Filters
