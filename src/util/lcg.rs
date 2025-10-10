@@ -24,7 +24,7 @@ impl LCG {
         }
     }
 
-    pub(crate) fn next_seed(&self, seed: i64) -> i64 {
+    pub fn next_seed(&self, seed: i64) -> i64 {
         self.modulus(
             seed.overflowing_mul(self.multiplier).0
                 .overflowing_add(self.addend).0,
@@ -41,7 +41,7 @@ impl LCG {
         }
     }
 
-    pub(crate) fn combine(&self, steps: i64) -> LCG {
+    pub fn combine(&self, steps: i64) -> LCG {
         let mut multiplier: i64 = 1;
         let mut addend: i64 = 0;
 
