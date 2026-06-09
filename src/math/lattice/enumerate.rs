@@ -76,7 +76,9 @@ impl SearchNode {
     ) -> SearchNode {
         let i = Rational::from(i);
         let next_optimize = self.constraints.with_strict_bound(&gradient, &i + offset);
-        let next_fixed = &self.fixed + &OwnedBigVector::basis_scaled(self.size, index, i);
+        let mut next_fixed = self.fixed.clone();
+        let updated = next_fixed.get(index) + &i;
+        next_fixed.set(index, updated);
 
         SearchNode {
             size: self.size,

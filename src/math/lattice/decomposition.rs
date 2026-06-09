@@ -1,5 +1,4 @@
 use crate::math::component::big_matrix::BigMatrix;
-use crate::math::component::big_vector::OwnedBigVector;
 use malachite::base::num::arithmetic::traits::Abs;
 use malachite::base::num::basic::traits::Zero;
 use malachite::rational::Rational;
@@ -7,7 +6,6 @@ use malachite::rational::Rational;
 pub fn inverse(matrix: &BigMatrix) -> BigMatrix {
     let mut m = matrix.clone();
     let size = m.row_count;
-    let mut p = OwnedBigVector::new(size);
     let mut inv = BigMatrix::identity(size);
 
     // Decomposition
@@ -28,7 +26,6 @@ pub fn inverse(matrix: &BigMatrix) -> BigMatrix {
             unreachable!("Matrix is singular");
         }
 
-        p.set(i, Rational::from(pivot));
         inv.swap_rows(i, pivot);
 
         if pivot != i {

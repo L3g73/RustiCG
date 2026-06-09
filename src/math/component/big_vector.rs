@@ -12,6 +12,7 @@ pub trait Vector {
 }
 
 impl<T: Vector> Vector for &T {
+    #[inline]
     fn get(&self, index: usize) -> &Rational {
         T::get(self, index)
     }
@@ -176,6 +177,7 @@ pub struct OwnedBigVector {
 }
 
 impl Vector for OwnedBigVector {
+    #[inline]
     fn get(&self, index: usize) -> &Rational {
         &self.numbers[index]
     }
@@ -221,10 +223,12 @@ impl OwnedBigVector {
         vector
     }
 
+    #[inline]
     fn get_mut(&mut self, index: usize) -> &mut Rational {
         &mut self.numbers[index]
     }
 
+    #[inline]
     pub fn set(&mut self, index: usize, value: Rational) {
         self.numbers[index] = value
     }
@@ -287,6 +291,7 @@ pub struct ViewBigVector<'r> {
 }
 
 impl Vector for ViewBigVector<'_> {
+    #[inline]
     fn get(&self, index: usize) -> &Rational {
         &self.numbers[self.step * index + self.start_pos]
     }
@@ -332,6 +337,7 @@ pub struct MutViewBigVector<'r> {
 }
 
 impl Vector for MutViewBigVector<'_> {
+    #[inline]
     fn get(&self, index: usize) -> &Rational {
         &self.numbers[self.step * index + self.start_pos]
     }
@@ -356,10 +362,12 @@ impl<'r> MutViewBigVector<'r> {
         }
     }
 
+    #[inline]
     fn get_mut(&mut self, index: usize) -> &mut Rational {
         &mut self.numbers[self.step * index + self.start_pos]
     }
 
+    #[inline]
     pub fn set(&mut self, index: usize, value: Rational) {
         self.numbers[self.step * index + self.start_pos] = value
     }

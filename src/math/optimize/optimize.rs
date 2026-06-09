@@ -66,6 +66,9 @@ impl Optimize {
 
         for row in 0..self.rows_m1 {
             let x = transformed.get(self.basics[row]);
+            if *x == 0 {
+                continue;
+            }
             eliminated -= self.table.get_row(row) * x;
         }
 
@@ -78,9 +81,9 @@ impl Optimize {
     }
 
     pub fn minimize(&mut self, gradient: &ViewBigVector) -> Rational {
-        let mut temp = OwnedBigVector::new(self.cols);
-        temp -= &self.transform_for_table(gradient, Rational::ZERO);
-        self.table.set_row(self.rows_m1, temp);
+        let mut objective = self.transform_for_table(gradient, Rational::ZERO);
+        objective.mul_assign(&Rational::NEGATIVE_ONE);
+        self.table.set_row(self.rows_m1, objective);
 
         self.solve();
 
@@ -167,12 +170,19 @@ impl Optimize {
 
             let x = self.table.get(row, entering).clone();
 
+            if x == 0 {
+                continue;
+            }
+
             for col in 0..self.cols {
                 if col == entering {
                     continue;
                 }
 
                 let y = self.table.get(exiting, col);
+                if *y == 0 {
+                    continue;
+                }
                 self.table
                     .set(row, col, self.table.get(row, col) - (&x * y))
             }

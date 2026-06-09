@@ -58,6 +58,9 @@ pub fn reduce<T: Fn(usize, &Vec<i32>) -> bool>(
                 }
 
                 let scale = matrix.get(i, pivot_column).clone();
+                if scale == 0 {
+                    continue;
+                }
                 for_all(matrix, others, |matrix| {
                     let scaled_row = matrix.get_row(pivot_row) * &scale;
                     matrix.get_row_mut(i).sub_assign(scaled_row);
