@@ -37,9 +37,9 @@ impl Ushr for i64 {
             return self >> n;
         }
 
-        let mut u = u64::from_ne_bytes(self.to_ne_bytes());
+        let mut u = self as u64;
         u >>= n;
-        i64::from_ne_bytes(u.to_ne_bytes())
+        u as i64
     }
 }
 
