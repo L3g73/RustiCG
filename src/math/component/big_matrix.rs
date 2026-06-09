@@ -54,10 +54,12 @@ impl BigMatrix {
         self.row_count == self.column_count
     }
 
+    #[inline]
     pub fn get(&self, row: usize, col: usize) -> &Rational {
         &self.numbers[col + self.column_count * row]
     }
 
+    #[inline]
     pub fn set(&mut self, row: usize, col: usize, value: Rational) {
         self.numbers[col + self.column_count * row] = value;
     }
@@ -139,13 +141,17 @@ impl BigMatrix {
     }
 
     pub fn transpose(&self) -> BigMatrix {
-        let mut dest: BigMatrix = BigMatrix::new(self.row_count, self.column_count);
-
-        for i in 0..self.column_count {
-            dest.set_row(i, self.get_column(i).to_owned());
+        let mut numbers = Vec::with_capacity(self.row_count * self.column_count);
+        for col in 0..self.column_count {
+            for row in 0..self.row_count {
+                numbers.push(self.numbers[col + self.column_count * row].clone());
+            }
         }
-
-        dest
+        BigMatrix {
+            numbers,
+            row_count: self.column_count,
+            column_count: self.row_count,
+        }
     }
 
     pub fn swap_rows(&mut self, row1: usize, row2: usize) {
