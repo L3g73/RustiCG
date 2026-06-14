@@ -6,6 +6,8 @@ Currently only Java's java.util.Random class is implemented, but other LCGs can 
 
 Click [here](https://github.com/L3g73/RustiCG/blob/main/CHANGELOG.md) for a changelog.
 
+Note: even if the iterator is dropped, the compute threads won't terminate instantly, causing multiple reversals directly after another to be slower.
+
 ### Example
 ```rust 
 use rusticg::reversal::dynamic_program::{DynamicProgram, Invertible, ReversalError};

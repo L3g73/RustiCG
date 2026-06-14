@@ -74,7 +74,8 @@ impl DynamicProgram {
         self.current_index += steps;
     }
 
-    /// Starts reversing seeds.
+    /// Starts reversing seeds.<br>
+    /// Even if this iterator is dropped, the compute threads will still run for a bit!
     pub fn reverse(self) -> impl Iterator<Item = i64> {
         self.random_reverser.into_all_valid_seeds()
     }

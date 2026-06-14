@@ -141,17 +141,13 @@ impl BigMatrix {
     }
 
     pub fn transpose(&self) -> BigMatrix {
-        let mut numbers = Vec::with_capacity(self.row_count * self.column_count);
-        for col in 0..self.column_count {
-            for row in 0..self.row_count {
-                numbers.push(self.numbers[col + self.column_count * row].clone());
-            }
+        let mut dest: BigMatrix = BigMatrix::new(self.row_count, self.column_count);
+
+        for i in 0..self.column_count {
+            dest.set_row(i, self.get_column(i).to_owned());
         }
-        BigMatrix {
-            numbers,
-            row_count: self.column_count,
-            column_count: self.row_count,
-        }
+
+        dest
     }
 
     pub fn swap_rows(&mut self, row1: usize, row2: usize) {
